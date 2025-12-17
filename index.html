@@ -1,64 +1,43 @@
-facebook-login.html
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Facebook Official Login</title>
+  <title>Secure Login</title>
 </head>
 <body>
 
-<h2>Login with Facebook</h2>
+<h2>Login</h2>
 
-<!-- Facebook Login Button -->
-<button onclick="facebookLogin()">Login with Facebook</button>
+<!-- Facebook Login -->
+<button onclick="fbLogin()">Login with Facebook</button>
 
-<!-- Facebook SDK -->
+<!-- GitHub Login -->
+<a href="https://github.com/login/oauth/authorize?client_id=YOUR_GITHUB_CLIENT_ID">
+  <button>Login with GitHub</button>
+</a>
+
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous"
-        src="https://connect.facebook.net/en_US/sdk.js"></script>
+  src="https://connect.facebook.net/en_US/sdk.js"></script>
 
 <script>
-  window.fbAsyncInit = function () {
+  window.fbAsyncInit = function() {
     FB.init({
-      appId: 'YOUR_FACEBOOK_APP_ID',   // 🔴 Replace this
+      appId: 'YOUR_FACEBOOK_APP_ID',
       cookie: true,
       xfbml: true,
-      version: 'v18.0'                 // Latest API version
-    });
-
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
+      version: 'v18.0'
     });
   };
 
-  function statusChangeCallback(response) {
-    if (response.status === 'connected') {
-      fetchUserData();
-    }
-  }
-
-  function facebookLogin() {
-    FB.login(function (response) {
+  function fbLogin() {
+    FB.login(function(response) {
       if (response.authResponse) {
-        fetchUserData();
-      } else {
-        alert('Login cancelled or failed');
+        alert("Facebook login successful");
       }
     }, {scope: 'public_profile,email'});
-  }
-
-  function fetchUserData() {
-    FB.api('/me', {fields: 'id,name,email'}, function(response) {
-      document.body.innerHTML += `
-        <h3>Login Successful</h3>
-        <p><strong>ID:</strong> ${response.id}</p>
-        <p><strong>Name:</strong> ${response.name}</p>
-        <p><strong>Email:</strong> ${response.email}</p>
-      `;
-      console.log(response);
-    });
   }
 </script>
 
 </body>
 </html>
+
